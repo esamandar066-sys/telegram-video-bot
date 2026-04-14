@@ -1,2 +1,4 @@
-aiogram==3.10.0
-yt-dlp>=2024.0.0
+aiogram==3.17.0
+yt-dlp
+google-auth-oauthlib
+google-api-python-client
