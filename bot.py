@@ -1,4 +1,3 @@
-import os
 import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
@@ -19,14 +18,16 @@ async def start(message: types.Message):
 @dp.message()
 async def handle_message(message: types.Message):
     if message.video:
-        await message.answer(f"✅ Video qabul qilindi: {message.video.file_name}")
+        await message.answer(f"✅ Video qabul qilindi!")
     elif message.text and "instagram.com" in message.text:
-        await message.answer("📸 Instagram linki qabul qilindi! Tez orada yuklanadi...")
+        await message.answer("📸 Instagram linki qabul qilindi!")
     else:
         await message.answer("📹 Iltimos, video fayl yoki Instagram linkini yuboring!")
 
 async def main():
-    print("🤖 Bot ishga tushdi!")
+    # Webhook'ni o'chirish (MUHIM!)
+    await bot.delete_webhook(drop_pending_updates=True)
+    print("🤖 Bot ishga tushdi! Webhook o'chirildi.")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
