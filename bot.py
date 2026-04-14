@@ -1,6 +1,5 @@
 import os
 import asyncio
-import yt_dlp
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.enums import ParseMode
@@ -12,17 +11,19 @@ dp = Dispatcher()
 @dp.message(Command("start"))
 async def start(message: types.Message):
     await message.answer(
-        "🎬 **Video Upload Bot**\n\n"
-        "📹 Video fayl yoki Instagram linkini yuboring:\n"
-        "• Video fayl (MP4, AVI, MOV)\n"
-        "• Instagram: instagram.com/reel/...\n\n"
-        "⚡️ 1 minutgacha video -> YouTube Shorts",
+        "🎬 **Video Upload Bot ishga tushdi!**\n\n"
+        "📹 Video fayl yoki Instagram linkini yuboring",
         parse_mode=ParseMode.MARKDOWN
     )
 
 @dp.message()
 async def handle_message(message: types.Message):
-    await message.answer("⏳ Video qabul qilindi! Qayta ishlanmoqda...")
+    if message.video:
+        await message.answer(f"✅ Video qabul qilindi: {message.video.file_name}")
+    elif message.text and "instagram.com" in message.text:
+        await message.answer("📸 Instagram linki qabul qilindi! Tez orada yuklanadi...")
+    else:
+        await message.answer("📹 Iltimos, video fayl yoki Instagram linkini yuboring!")
 
 async def main():
     print("🤖 Bot ishga tushdi!")
